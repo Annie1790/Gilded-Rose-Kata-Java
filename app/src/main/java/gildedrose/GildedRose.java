@@ -6,20 +6,22 @@ import java.util.Map;
 
 class GildedRose {
     List<Item> items;
-    Map<String, Strategy> itemStrategies = new HashMap<>();
 
     final String BRIE = "Aged Brie";
     final String PASS = "Backstage passes to a Coldplay concert";
     final String EGG = "Fabergé egg";
+
+    Map<String, Strategy> itemStrategies = Map.of(
+            BRIE, new BrieStrategy(),
+            EGG, new FabergeStrategy(),
+            PASS, new PassStrategy()
+    );
 
     public GildedRose(List<Item> items) {
         this.items = items;
     }
 
     public void applyStrategy() {
-        itemStrategies.put(BRIE, new BrieStrategy());
-        itemStrategies.put(EGG, new FabergeStrategy());
-        itemStrategies.put(PASS, new PassStrategy());
         items = items
                 .stream()
                 .map(item -> Map.entry(item, findItemWithStrategy(item)))
